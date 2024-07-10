@@ -28,19 +28,20 @@
       <div class="finger"></div>
     </div>
   </div>
-  <form>
+  <form method="POST"action="{% url 'login'%}">
+    {% csrf_token %}
     <div class="hand"></div>
     <div class="hand rgt"></div>
     <h1>Panda Login</h1>
     <div class="form-group">
-      <input required="required" class="form-control"/>
+      <input required="required" class="form-control"name="username" />
       <label class="form-label">Username    </label>
     </div>
     <div class="form-group">
-      <input id="password" type="password" required="required" class="form-control"/>
+      <input id="password" type="password" required="required" class="form-control" name="password"/>
       <label class="form-label">Password</label>
-      <p class="alert">Invalid Credentials..!!</p>
       <button class="btn">Login </button>
+      <p> <a href="{% url 'register' %}">Create Account</a></p>
     </div>
   </form>
 {% endblock %}
