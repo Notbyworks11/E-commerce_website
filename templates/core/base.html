@@ -30,7 +30,9 @@
                 
         {% endif %}
         <!-- Header-->
-        {% include 'includes/header.html' %}
+        {% block header %}
+            {% include 'includes/header.html' %}
+        {% endblock %}
         
         <!-- Header-->
 

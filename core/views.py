@@ -9,7 +9,11 @@ from django import forms
 # Create your views here.
 def index(request):
     products = Product.objects.all()
-    return render( request, "products/products.html",{'products':products})
+    return render( request, "Home/home.html",{'products':products})
+
+def product(request,pk):
+    product = Product.objects.get(id=pk)
+    return render( request, "Products/product.html",{'product':product})
 
 def login_user(request):
     if request.method == "POST":
