@@ -1,0 +1,61 @@
+/* about/static/about/styles.css */
+body {
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    background: linear-gradient(to bottom right, #ffccf9, #ff99cc);
+    color: #333;
+    margin: 0;
+    padding: 0;
+}
+
+.about-container {
+    max-width: 800px;
+    margin: 50px auto;
+    padding: 40px;
+    background-color: #ffffff;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    border-radius: 12px;
+    text-align: center;
+}
+
+h1 {
+    color: #ff4081;
+    font-size: 2.8em;
+    margin-bottom: 20px;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    background: linear-gradient(to right, #ff4081, #ff80bf);
+
+}
+
+p {
+    font-size: 1.2em;
+    line-height: 1.8;
+    color: #666;
+    margin-bottom: 20px;
+    transition: color 0.3s ease-in-out;
+}
+
+.about-container p:first-of-type {
+    font-size: 1.3em;
+    color: #ff4081;
+    margin-bottom: 30px;
+}
+
+p:hover {
+    color: #ff4081;
+}
+
+@media (max-width: 768px) {
+    .about-container {
+        padding: 20px;
+    }
+
+    h1 {
+        font-size: 2.4em;
+    }
+
+    p {
+        font-size: 1.1em;
+    }
+}
