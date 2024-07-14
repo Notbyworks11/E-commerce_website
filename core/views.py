@@ -22,6 +22,7 @@ def product(request,pk):
 def category(request,foo):
     #replacing hyphens with spaces
     foo =foo.strip().replace('-',' ')
+    
     #Call category from the url
     try:
         category = Category.objects.get(name=foo)
