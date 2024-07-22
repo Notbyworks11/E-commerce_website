@@ -50,8 +50,8 @@ $(document).on('click','#add-cart', function(e){
       type: 'POST',
       url: '{% url 'cart_add'  %}',
       data:{
-        product_id: $('#add-cart').val()
-        crsfmiddlewaretoken:'{{crsf_token}}',
+        product_id: $('#add-cart').val(),
+        csrfmiddlewaretoken: '{{ csrf_token }}',
         action:'post'
       },
       success : function(json){
