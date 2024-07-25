@@ -58,4 +58,16 @@ class Cart():
         upcart = self.cart
 
         return upcart
+    
+    def delete(self,product):
+        product_id  = str(product)
+        rcart = self.cart
+        if product_id in self.cart:
+            del rcart[product_id]
+            
+        self.save()
+        #removed item and updated cart
+        rucart = self.cart
+        return rucart
+        
 

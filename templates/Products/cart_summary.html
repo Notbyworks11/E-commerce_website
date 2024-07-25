@@ -89,7 +89,7 @@
                 
               <a href="{% url 'index' %}" class ="btn btn-secondary">Back</a>
               <button type="button" data-index = "{{product.id}}" class="btn btn-secondary update-cart"  >Update</button>
-              
+              <button type="button" data-index = "{{product.id}}" class="btn btn-danger delete-product"  >Remove</button>
             </center>
             </div>
     
@@ -107,6 +107,7 @@
 </div>
 <br><br><br><br><br><br><br><br><br>
 <script>
+    //update Cart
     $(document).on('click', '.update-cart', function(e) {
         e.preventDefault();
         // Get the selected quantity from the dropdown
@@ -119,6 +120,31 @@
             data: {
                 product_id: $(this).data('index'),
                 product_qty: selectedQty, // Default quantity
+                csrfmiddlewaretoken: '{{ csrf_token }}',
+                action: 'post'
+            },
+            success: function(json) {
+                //console.log(json); // Debugging line to check response
+                //document.getElementById("cart_quantity").textContent = json.qty; // Update cart quantity display
+                location.reload();
+            },
+            error: function(xhr, errmsg, err) {
+                console.log(xhr.status + ": " + xhr.responseText); // Debugging line to check errors
+            }
+        });
+    });
+    //Remove item
+    $(document).on('click', '.delete-product', function(e) {
+        e.preventDefault();
+        // Get the selected quantity from the dropdown
+        
+        //var productid = $(this).data('index');
+        //var selectedQty=$('#select' + productid + ' option:selected').val();
+        $.ajax({
+            type: 'POST',
+            url: '{% url 'cart_delete' %}', // URL for adding items to cart
+            data: {
+                product_id: $(this).data('index'),
                 csrfmiddlewaretoken: '{{ csrf_token }}',
                 action: 'post'
             },
