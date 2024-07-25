@@ -59,7 +59,7 @@
               <br>
               <div class="row justify-content-center">
                     <div class="col-md-2 quantity-label">Quantity:</div>
-                    <div class="col-md-2"><select class="form-select form-select-sm" id="qty-cart" >
+                    <div class="col-md-2"><select class="form-select form-select-sm" id="select{{product.id}}" >
                         <option seletected>
                             
                             {% for key,value in quantities.items %}
@@ -88,6 +88,7 @@
               <br>
                 
               <a href="{% url 'index' %}" class ="btn btn-secondary">Back</a>
+              <button type="button" data-index = "{{product.id}}" class="btn btn-secondary update-cart"  >Update</button>
               
             </center>
             </div>
@@ -106,21 +107,25 @@
 </div>
 <br><br><br><br><br><br><br><br><br>
 <script>
-    $(document).on('change', '.form-select-sm', function() {
-        var product_id = $(this).attr('id').split('-')[2]; // Extract product ID from select element ID
-        var product_qty = $(this).val(); // Get selected quantity
+    $(document).on('click', '.update-cart', function(e) {
+        e.preventDefault();
+        // Get the selected quantity from the dropdown
+        
+        var productid = $(this).data('index');
+        var selectedQty=$('#select' + productid + ' option:selected').val();
         $.ajax({
             type: 'POST',
-            url: '{% url 'cart_update' %}', // URL for updating item quantity in cart
+            url: '{% url 'cart_update' %}', // URL for adding items to cart
             data: {
-                product_id: product_id,
-                product_qty: product_qty,
+                product_id: $(this).data('index'),
+                product_qty: selectedQty, // Default quantity
                 csrfmiddlewaretoken: '{{ csrf_token }}',
                 action: 'post'
             },
             success: function(json) {
-                console.log(json); // Debugging line to check response
-                document.getElementById("cart_quantity").textContent = json.qty; // Update cart quantity display
+                //console.log(json); // Debugging line to check response
+                //document.getElementById("cart_quantity").textContent = json.qty; // Update cart quantity display
+                location.reload();
             },
             error: function(xhr, errmsg, err) {
                 console.log(xhr.status + ": " + xhr.responseText); // Debugging line to check errors
