@@ -1,4 +1,25 @@
 {%extends 'core/base.html'%}
+{% block extra_styles %}
+<style>
+    .row {
+        margin-top: 10px;
+    }
+    .form-select-sm {
+        width: auto; /* Adjust width if needed */
+    }
+    .quantity-label {
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        padding-right: 10px; /* Adjust spacing as necessary */
+    }
+    .form-select-sm {
+        width: auto; /* Adjust width if needed */
+        display: inline-block; /* Ensures the select stays inline */
+    }
+</style>
+
+{% endblock %}
 {% block content %}
 <br>
 <div class="container">
@@ -32,9 +53,39 @@
             </div>
     
               {% else %}
-                £{{product.price}}
+                £{{product.price}} 
                 
               {% endif %}
+              <br>
+              <div class="row justify-content-center">
+                    <div class="col-md-2 quantity-label">Quantity:</div>
+                    <div class="col-md-2"><select class="form-select form-select-sm" id="qty-cart" >
+                        <option seletected>
+                            
+                            {% for key,value in quantities.items %}
+                                
+                                {% if key == product.id|slugify %}
+                                    {{value.quantity}}
+                                {% else %}
+
+                                    
+                                {% endif %}
+                                    
+                            {% endfor %}
+                                
+
+                        </option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                      </select>
+                    </div>
+
+              </div>
+              
+              <br>
                 
               <a href="{% url 'index' %}" class ="btn btn-secondary">Back</a>
               
@@ -43,7 +94,8 @@
     
           </div>
         </div>
-      </div><br>
+      </div><hr>
+
      
 
     {% endfor %}
@@ -53,4 +105,27 @@
         
 </div>
 <br><br><br><br><br><br><br><br><br>
+<script>
+    $(document).on('change', '.form-select-sm', function() {
+        var product_id = $(this).attr('id').split('-')[2]; // Extract product ID from select element ID
+        var product_qty = $(this).val(); // Get selected quantity
+        $.ajax({
+            type: 'POST',
+            url: '{% url 'cart_update' %}', // URL for updating item quantity in cart
+            data: {
+                product_id: product_id,
+                product_qty: product_qty,
+                csrfmiddlewaretoken: '{{ csrf_token }}',
+                action: 'post'
+            },
+            success: function(json) {
+                console.log(json); // Debugging line to check response
+                document.getElementById("cart_quantity").textContent = json.qty; // Update cart quantity display
+            },
+            error: function(xhr, errmsg, err) {
+                console.log(xhr.status + ": " + xhr.responseText); // Debugging line to check errors
+            }
+        });
+    });
+    </script>
 {% endblock %}

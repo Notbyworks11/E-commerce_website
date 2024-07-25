@@ -2,7 +2,27 @@
 {% load static %}
 {% block header %}
 {% endblock %}
+{% block extra_styles %}
+<style>
+    .row {
+        margin-top: 10px;
+    }
+    .form-select-sm {
+        width: auto; /* Adjust width if needed */
+    }
+    .quantity-label {
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        padding-right: 10px; /* Adjust spacing as necessary */
+    }
+    .form-select-sm {
+        width: auto; /* Adjust width if needed */
+        display: inline-block; /* Ensures the select stays inline */
+    }
+</style>
 
+{% endblock %}
 {% block content %}
 <br>
 <div class="card mb-3" style="max-width: 600px;">
@@ -29,9 +49,39 @@
         </div>
 
           {% else %}
-            £{{product.price}}
+            £{{product.price}} <br>
             
           {% endif %}
+          <br>
+          <div class="row justify-content-center">
+                <div class="col-md-2 quantity-label">Quantity:</div>
+                <div class="col-md-2"><select class="form-select form-select-sm" id="qty-cart" >
+                    <option seletected>
+                        
+                        {% for key,value in quantities.items %}
+                            
+                            {% if key == product.id|slugify %}
+                                {{value.quantity}}
+                            {% else %}
+
+                                
+                            {% endif %}
+                                
+                        {% endfor %}
+                            
+
+                    </option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                  </select>
+                </div>
+
+          </div>
+          
+          <br>
             
           <a href="{% url 'index' %}" class ="btn btn-secondary">Back</a>
           <button type ="button" value= "{{product.id}}"class="btn btn-secondary" id="add-cart"> Add To Cart</button>
@@ -44,26 +94,27 @@
 
   <script>
 //check if button pressed
-$(document).on('click','#add-cart', function(e){
-  e.preventDefault();
-  $.ajax({
-      type: 'POST',
-      url: '{% url 'cart_add'  %}',
-      data:{
-        product_id: $('#add-cart').val(),
-        csrfmiddlewaretoken: '{{ csrf_token }}',
-        action:'post'
-      },
-      success : function(json){
-        console.log(json)
-        document.getElementById("cart_quantity").textContent = json.qty;
-      },
-
-      error: function(xhr, errmsg, err){
-
-      }
+  $(document).on('click', '#add-cart', function(e) {
+      e.preventDefault();
+      // Get the selected quantity from the dropdown
+      var selectedQty = $('#qty-cart').val();
+      $.ajax({
+          type: 'POST',
+          url: '{% url 'cart_add' %}', // URL for adding items to cart
+          data: {
+              product_id: $(this).val(),
+              product_qty: selectedQty, // Default quantity
+              csrfmiddlewaretoken: '{{ csrf_token }}',
+              action: 'post'
+          },
+          success: function(json) {
+              console.log(json); // Debugging line to check response
+              document.getElementById("cart_quantity").textContent = json.qty; // Update cart quantity display
+          },
+          error: function(xhr, errmsg, err) {
+              console.log(xhr.status + ": " + xhr.responseText); // Debugging line to check errors
+          }
+      });
   });
-})
-
   </script>
 {%endblock%}

@@ -7,13 +7,14 @@ class Cart():
         if not cart:
             cart = self.session['cart'] = {}
         self.cart = cart
-    def add(self, product, quantity=1, update_quantity=False):
+    def add(self, product, quantity, update_quantity=False):
         product_id = str(product.id)
+        product_qty = int(quantity)
         if product_id in self.cart:
             if update_quantity:
-                self.cart[product_id]['quantity'] = quantity
+                self.cart[product_id]['quantity'] = (product_qty)
             else:
-                self.cart[product_id]['quantity'] += quantity
+                self.cart[product_id]['quantity'] += (product_qty)
         else:
             self.cart[product_id] = {'price': str(product.price), 'quantity': quantity}
         self.save()
@@ -39,3 +40,6 @@ class Cart():
         products = Product.objects.filter(id__in=product_ids)
         
         return products
+    def get_quants(self):
+        quantities = self.cart
+        return quantities
