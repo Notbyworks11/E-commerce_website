@@ -69,5 +69,16 @@ class Cart():
         #removed item and updated cart
         rucart = self.cart
         return rucart
+    
+    def total(self):
+        price_total = 0
+        for product_id, item in self.cart.items():
+            product = Product.objects.get(id=product_id)
+            if product.is_sale:
+                price_total += float(product.sale_price) * item['quantity']
+            else:
+                price_total += float(product.price) * item['quantity']
+        return price_total
+
         
 

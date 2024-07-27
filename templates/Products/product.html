@@ -1,7 +1,5 @@
 {%extends 'core/base.html' %}
 {% load static %}
-{% block header %}
-{% endblock %}
 {% block extra_styles %}
 <style>
     .row {
@@ -110,6 +108,8 @@
           success: function(json) {
               console.log(json); // Debugging line to check response
               document.getElementById("cart_quantity").textContent = json.qty; // Update cart quantity display
+              location.reload();
+          
           },
           error: function(xhr, errmsg, err) {
               console.log(xhr.status + ": " + xhr.responseText); // Debugging line to check errors

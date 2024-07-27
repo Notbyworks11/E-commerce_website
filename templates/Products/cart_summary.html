@@ -1,4 +1,5 @@
 {%extends 'core/base.html'%}
+
 {% block extra_styles %}
 <style>
     .row {
@@ -20,6 +21,28 @@
 </style>
 
 {% endblock %}
+
+{% block header %}
+    
+
+<header class="bg-dark py-2">
+    <div class="container px-4 px-lg-5 my-5">
+        <div class="text-center text-white">
+  
+            <h1 class="display-4 fw-bolder">Shopping Cart</h1>
+            <p class="lead fw-normal text-white-50 mb-0"> View your Cart</p>
+ 
+     
+
+        </div>
+    </div>
+</header>
+
+    
+
+{% endblock  %}
+    
+
 {% block content %}
 <br>
 <div class="container">
@@ -100,6 +123,8 @@
      
 
     {% endfor %}
+    <h3>Total:£{{totals}} </h3>
+    <br><br><br>
     {% else %}
     There is nothing in your cart.
     {% endif %}

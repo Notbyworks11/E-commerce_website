@@ -18,7 +18,9 @@ def about(request):
 def product(request,pk): 
     product = Product.objects.get(id=pk)
     return render( request, "Products/product.html",{'product':product})
-
+def category_summary(request):
+    categories = Category.objects.all()
+    return render( request, "Products/category_all.html",{"categories": categories})
 def category(request,foo):
     #replacing hyphens with spaces
     foo =foo.strip().replace('-',' ')

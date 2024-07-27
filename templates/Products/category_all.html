@@ -1,0 +1,68 @@
+{%extends 'core/base.html'%}
+
+{% block extra_styles %}
+<style>
+    .row {
+        margin-top: 10px;
+    }
+    .form-select-sm {
+        width: auto; /* Adjust width if needed */
+    }
+    .quantity-label {
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        padding-right: 10px; /* Adjust spacing as necessary */
+    }
+    .form-select-sm {
+        width: auto; /* Adjust width if needed */
+        display: inline-block; /* Ensures the select stays inline */
+    }
+</style>
+
+{% endblock %}
+
+{% block header %}
+    
+
+<header class="bg-dark py-2">
+    <div class="container px-4 px-lg-5 my-5">
+        <div class="text-center text-white">
+  
+            <h1 class="display-4 fw-bolder">Categories</h1>
+            <p class="lead fw-normal text-white-50 mb-0"> Choose Your Category Below ....</p>
+ 
+     
+
+        </div>
+    </div>
+</header>
+
+    
+
+{% endblock  %}
+    
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <center>
+            <div class="col-8">
+            
+            {% for category in categories %}
+                
+            
+                
+                <h3><a href="{% url 'category' category %}">{{category}}</a></h3>    
+               
+    
+            {% endfor %}
+            </div>
+        </center>
+
+    </div>
+</div>
+
+    
+<br><br><br><br><br><br><br><br><br><br><br><br><br>
+{% endblock %}

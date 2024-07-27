@@ -30,5 +30,6 @@ urlpatterns = [
     path("register/",views.register_user ,name='register'),
     path("product/<int:pk>",views.product ,name='product'),
     path("category/<str:foo>",views.category ,name='category'),
+    path("category_summary/",views.category_summary ,name='category_summary'),
     path("cart/",include('cart.urls')),
 ] + static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)
