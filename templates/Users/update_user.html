@@ -1,0 +1,39 @@
+{% extends 'core/base.html' %}
+{% load static %}
+
+
+{% block header %}
+    
+
+    
+<header class="bg-dark py-2">
+    <div class="container px-4 px-lg-5 my-5">
+        <div class="text-center text-white">
+  
+            <h1 class="display-4 fw-bolder">Update Profile</h1>
+            <p class="lead fw-normal text-white-50 mb-0">Update Your Profile ....</p>
+ 
+     
+
+        </div>
+    </div>
+</header>
+{% endblock %}
+
+{% block extra_styles %}
+<link href="{% static 'css/panda2.css' %}" rel="stylesheet" />
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <form method="POST" action="{% url 'update_user' %}" class="form-container">
+        {% csrf_token %}
+        <h1>Update Profile</h1>
+        <div class="form-group">
+            {{ user_form.as_p }}
+        </div>
+        <button type="submit" class="btn btn-success">Update Profile</button>
+       
+    </form>
+</div>
+{% endblock %}
