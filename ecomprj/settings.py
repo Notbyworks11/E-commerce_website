@@ -11,21 +11,36 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 
 from pathlib import Path
+from decouple import config
+import environ
 import os
+import dj_database_url
+
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+
+env = environ.Env()
+
+# Reading .env file
+environ.Env.read_env(str(BASE_DIR / '.env'))
+
+# Accessing environment variables with default values
+ENVIRONMENT = env('ENVIRONMENT', default='production')
+SECRET_KEY = env('SECRET_KEY', default='your-default-secret-key')
+DATABASE_URL = config('DATABASE_URL')
 
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-_0-k7s0@+nush4qilcp^v5zxmp3a9swl(_iqo6e*kc*&fs61xl'
+SECRET_KEY = config('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -84,6 +99,9 @@ DATABASES = {
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
+POSTGRES_LOCALLY = False
+if ENVIRONMENT == 'production' or POSTGRES_LOCALLY == True:
+    DATABASES['default']= dj_database_url.parse(DATABASE_URL)
 
 
 # Password validation
