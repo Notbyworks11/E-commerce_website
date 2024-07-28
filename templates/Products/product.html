@@ -2,22 +2,33 @@
 {% load static %}
 {% block extra_styles %}
 <style>
-    .row {
-        margin-top: 10px;
-    }
-    .form-select-sm {
-        width: auto; /* Adjust width if needed */
-    }
-    .quantity-label {
-        display: flex;
-        align-items: center;
-        justify-content: flex-end;
-        padding-right: 10px; /* Adjust spacing as necessary */
-    }
-    .form-select-sm {
-        width: auto; /* Adjust width if needed */
-        display: inline-block; /* Ensures the select stays inline */
-    }
+  .row {
+      margin-top: 10px;
+  }
+  .quantity-container {
+      display: flex;
+      align-items: center;
+  }
+  .quantity-label {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      padding-right: 10px; /* Adjust spacing as necessary */
+  }
+  .form-select-sm {
+      width: auto; /* Adjust width if needed */
+  }
+  @media (max-width: 768px) {
+      .quantity-container {
+          justify-content: flex-start;
+          width: 100%;
+      }
+      .quantity-label {
+          justify-content: flex-start;
+          padding-right: 10px;
+          margin-bottom: 0; /* Ensure no extra space between label and select */
+      }
+  }
 </style>
 
 {% endblock %}
@@ -51,33 +62,23 @@
             
           {% endif %}
           <br>
-          <div class="row justify-content-center">
-                <div class="col-md-2 quantity-label">Quantity:</div>
+          <div class="row justify-content-center quantity-container">
+                
                 <div class="col-md-2"><select class="form-select form-select-sm" id="qty-cart" >
-                    <option seletected>
-                        
-                        {% for key,value in quantities.items %}
-                            
-                            {% if key == product.id|slugify %}
-                                {{value.quantity}}
-                            {% else %}
-
-                                
-                            {% endif %}
-                                
-                        {% endfor %}
-                            
-
-                    </option>
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                    <option value="4">4</option>
-                    <option value="5">5</option>
-                  </select>
-                </div>
-
+                  <option selected disabled>Quantity:</option>
+                  {% for key, value in quantities.items %}
+                      {% if key == product.id|slugify %}
+                          <option value="{{ value.quantity }}" selected>Quantity: {{ value.quantity }}</option>
+                      {% endif %}
+                  {% endfor %}
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                  <option value="4">4</option>
+                  <option value="5">5</option>
+              </select>
           </div>
+      </div>
           
           <br>
             
