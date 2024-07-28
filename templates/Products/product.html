@@ -65,7 +65,7 @@
           <div class="row justify-content-center quantity-container">
                 
                 <div class="col-md-2"><select class="form-select form-select-sm" id="qty-cart" >
-                  <option selected disabled>Quantity:</option>
+                  <option selected disabled>Qty:</option>
                   {% for key, value in quantities.items %}
                       {% if key == product.id|slugify %}
                           <option value="{{ value.quantity }}" selected>Quantity: {{ value.quantity }}</option>
